@@ -1,0 +1,13 @@
+My program will simulate a corporation's workforce over time (BelloCorp). The keys of the map will represent various 
+departments at the company, such as the sales department, finance, product development, marketing, etc.
+The array within the value of the map will contain the names of all the employees in that department.
+The employees are of three types: Manager, Entry-Level, and Intern, corresponding to the three lists within
+the array.
+
+Events:
+There are two main events: a hiring surge and a layoff. 
+Hiring Surge: A random number of employees are added to a random department.
+Layoff: A random number of employees are removed from a random department.
+More events may be added in future updates.
+
+At any given time period, either a lay off, hiring surge, or no event may occur.
