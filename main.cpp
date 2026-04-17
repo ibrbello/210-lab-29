@@ -8,12 +8,12 @@
 #include <list>
 #include <string>
 using namespace std;
+const int ARR_SIZE = 3;
+void displayDepartment(string , array<list<string>, ARR_SIZE> );
 
-void displayDepartment(string , array<list<string>, 3> );
+void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
 
-void hiringEvent(map<string, array<list<string>, 3>>& , string );
-
-void layoffEvent(map<string, array<list<string>, 3>>& , string );
+void layoffEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
     //   Key   = department name (string)
     //   Value = array of 3 lists (Managers, Entry-Level, Interns)
     // --------------------------------------------------------
-    map<string, array<list<string>, 3>> workforce;
+    map<string, array<list<string>, ARR_SIZE>> workforce;
 
     // --------------------------------------------------------
     // STEP 2: Open the external data file
@@ -122,7 +122,7 @@ int main()
 //          organized by their type (Manager, Entry-Level, Intern)
 // Parameters: department name (string), array of three lists (employees by type)
 
-void displayDepartment(string deptName, array<list<string>, 3> employees) {
+void displayDepartment(string deptName, array<list<string>, ARR_SIZE> employees) {
     // // Print the department name as a header
 
     // // Print each of the three employee type categories:
@@ -141,7 +141,7 @@ void displayDepartment(string deptName, array<list<string>, 3> employees) {
 // Purpose: Simulate a hiring surge by adding employees to a department
 // Parameters: reference to the map (so changes persist), department name (string)
 
-void hiringEvent(map<string, array<list<string>, 3>>& workforce, string dept) {
+void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& workforce, string dept) {
     // // Randomly determine how many employees to hire (e.g., between 1 and 5)
 
     // // Randomly determine which employee type to hire (0=Manager, 1=Entry-Level, 2=Intern)
@@ -160,7 +160,7 @@ void hiringEvent(map<string, array<list<string>, 3>>& workforce, string dept) {
 // Purpose: Simulate a layoff by removing employees from a department
 // Parameters: reference to the map, department name (string)
 
-void layoffEvent(map<string, array<list<string>, 3>>& workforce, string dept) {
+void layoffEvent(map<string, array<list<string>, ARR_SIZE>>& workforce, string dept) {
     // Randomly determine which employee type category to lay off from
 
     // Make sure the chosen list is not empty before removing
