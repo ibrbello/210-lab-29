@@ -9,6 +9,20 @@
 #include <string>
 using namespace std;
 const int ARR_SIZE = 3;
+const string depts[4] = {"Product","Finance","Marketing", "HR"};
+const string roles[3] = {"Manager", "Entry-Level", "Intern"};
+const string names[50] = {
+    "Alice", "Brandon", "Carmen", "Derek", "Elena",
+    "Felix", "Grace", "Henry", "Isla", "Jordan",
+    "Kara", "Liam", "Maya", "Noah", "Olivia",
+    "Pedro", "Quinn", "Rachel", "Samuel", "Tara",
+    "Ursula", "Victor", "Wendy", "Xavier", "Yara",
+    "Zane", "Abby", "Blake", "Chloe", "Dylan",
+    "Eva", "Finn", "Gina", "Hunter", "Ivy",
+    "Jake", "Kira", "Logan", "Mia", "Nathan",
+    "Opal", "Preston", "Rosa", "Scott", "Tina",
+    "Uma", "Vince", "Willa", "Xander", "Yusuf"
+};
 void displayDepartment(string , array<list<string>, ARR_SIZE> );
 
 void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
