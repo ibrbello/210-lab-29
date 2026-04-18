@@ -1,0 +1,19 @@
+Testing Procedures
+This file details how the functions within this program will be tested.
+
+Function 1: displayDepartment()
+This test will ensure that this function displays the contents of the map correctly.
+It will ensure that the function prints properly when the list is empty, and ensure that 
+the formatting is correct.
+
+Function 2: hiringEvent()
+This test will ensure that the hiring event did in fact add employees
+to the correct list. The test will create a small container of employees 
+and add some random values and print out the contents. 
+Then it will call hiringEvent() and then print out the contents, 
+so then the chnages can be verified. 
+
+Function 3: layoffEvent()
+This test will be similar to the test for hiringEVent(), 
+while also including a test that  ensures that the function behaves 
+correctly with an empty container.
