@@ -7,6 +7,7 @@
 #include <array>
 #include <list>
 #include <string>
+
 using namespace std;
 const int ARR_SIZE = 3;
 const string depts[4] = {"Product","Finance","Marketing", "HR"};
@@ -31,6 +32,68 @@ void layoffEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
 
 int main()
 {
+    srand(time(0));
+
+
+    // Write tests for displayDepartment
+    // create test container
+    map<string, array<list<string>, ARR_SIZE>> testWorkforce;
+    testWorkforce["Finance"][0].push_back("Alice");
+    testWorkforce["HR"][0].push_back("Ibrahim");
+    testWorkforce["HR"][1].push_back("Bob");
+    // ensure correct output
+    for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+    // Should cout message error message
+    map<string, array<list<string>, ARR_SIZE>> emptyWorkforce;
+    for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+
+    // Test for hiringEvent() (use same test map)
+    cout << endl << endl;
+    // print out original state
+    for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+    // Check that the hiring event worked for different departments
+    hiringEvent(testWorkforce, "Finance");
+    displayDepartment("Finance", testWorkforce["Finance"]);
+
+    hiringEvent(testWorkforce, "HR");
+    displayDepartment("HR", testWorkforce["HR"]);
+
+    // Should still work even though the key isn't already in the map
+    hiringEvent(testWorkforce, "Product");
+    displayDepartment("Product", testWorkforce["Product"]);
+
+
+    // Test for layoffEvent() 
+    map<string, array<list<string>, ARR_SIZE>> testWorkforce2;
+    // Randomly populate a department with 10 values
+    for (int i = 0; i < 10; i++) {
+        
+    } 
+    testWorkforce["Finance"][0].push_back("Alice");
+    testWorkforce["HR"][0].push_back("Ibrahim");
+    testWorkforce["HR"][1].push_back("Bob");
+
+
+
+
+
+
+
+
+
+
+
+
+
     // --------------------------------------------------------
     // STEP 1: Declare the main data structure
     // A map where:
@@ -112,6 +175,9 @@ int main()
             layoffEvent(workforce, "Sales");
         }
     }
+
+    
+
 
     // --------------------------------------------------------
     // STEP 6: Display FINAL STATE of BelloCorp after simulation
