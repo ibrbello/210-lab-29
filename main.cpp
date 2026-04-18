@@ -7,23 +7,114 @@
 #include <array>
 #include <list>
 #include <string>
+
 using namespace std;
+const int ARR_SIZE = 3;
+const string depts[4] = {"Product","Finance","Marketing", "HR"};
+const string roles[3] = {"Manager", "Entry-Level", "Intern"};
+const string names[50] = {
+    "Alice", "Brandon", "Carmen", "Derek", "Elena",
+    "Felix", "Grace", "Henry", "Isla", "Jordan",
+    "Kara", "Liam", "Maya", "Noah", "Olivia",
+    "Pedro", "Quinn", "Rachel", "Samuel", "Tara",
+    "Ursula", "Victor", "Wendy", "Xavier", "Yara",
+    "Zane", "Abby", "Blake", "Chloe", "Dylan",
+    "Eva", "Finn", "Gina", "Hunter", "Ivy",
+    "Jake", "Kira", "Logan", "Mia", "Nathan",
+    "Opal", "Preston", "Rosa", "Scott", "Tina",
+    "Uma", "Vince", "Willa", "Xander", "Yusuf"
+};
+void displayDepartment(string , array<list<string>, ARR_SIZE> );
 
-void displayDepartment(string , array<list<string>, 3> );
+void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
 
-void hiringEvent(map<string, array<list<string>, 3>>& , string );
-
-void layoffEvent(map<string, array<list<string>, 3>>& , string );
+void layoffEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
 
 int main()
 {
+    srand(time(0));
+
+
+    // Write tests for displayDepartment
+    // create test container
+    cout << "Testing display workforce function..." << endl;
+
+    map<string, array<list<string>, ARR_SIZE>> testWorkforce;
+    testWorkforce["Finance"][0].push_back("Alice");
+    testWorkforce["HR"][0].push_back("Ibrahim");
+    testWorkforce["HR"][1].push_back("Bob");
+    // ensure correct output
+    for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+    // Should cout message error message
+    map<string, array<list<string>, ARR_SIZE>> emptyWorkforce;
+    for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+
+    // Test for hiringEvent() (use same test map)
+    cout << endl;
+    cout << "Testing hiring function..." << endl;
+
+    // print out original state
+    for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+    // Check that the hiring event worked for different departments
+    hiringEvent(testWorkforce, "Finance");
+    displayDepartment("Finance", testWorkforce["Finance"]);
+
+    hiringEvent(testWorkforce, "HR");
+    displayDepartment("HR", testWorkforce["HR"]);
+
+    // Should still work even though the key isn't already in the map
+    hiringEvent(testWorkforce, "Product");
+    displayDepartment("Product", testWorkforce["Product"]);
+
+
+    // Test for layoffEvent() 
+    cout << endl;
+    cout << "Testing layoff function..." << endl;
+    
+    map<string, array<list<string>, ARR_SIZE>> testWorkforce2;
+    // Populate a department with workers from each role
+    for (int i = 0; i < 10; i++) {
+        testWorkforce2["Finance"][0].push_back("Alice");
+        testWorkforce2["Finance"][1].push_back("Bob");
+        testWorkforce2["Finance"][2].push_back("John");
+    } 
+
+    // Find size of total workforce before-hand
+    int sizeBefore = testWorkforce2["Finance"][0].size()
+    + testWorkforce2["Finance"][1].size()
+    + testWorkforce2["Finance"][2].size();
+
+    layoffEvent(testWorkforce2, "Finance");
+
+    // Find size of total workforce afterward
+    int sizeAfter = testWorkforce2["Finance"][0].size()
+    + testWorkforce2["Finance"][1].size()
+    + testWorkforce2["Finance"][2].size();
+    
+    // compare the sizes. If there's a change, then the layoff worked
+    cout << "Size of workforce before layoff: " << sizeBefore << endl;
+    cout << "Size of workforce after layoff: " << sizeAfter << endl;
+
+    cout << "Checking for behavior with empty workforce..." << endl;
+    layoffEvent(emptyWorkforce, "Finance");
+    
+
     // --------------------------------------------------------
     // STEP 1: Declare the main data structure
     // A map where:
     //   Key   = department name (string)
     //   Value = array of 3 lists (Managers, Entry-Level, Interns)
     // --------------------------------------------------------
-    map<string, array<list<string>, 3>> workforce;
+    map<string, array<list<string>, ARR_SIZE>> workforce;
 
     // --------------------------------------------------------
     // STEP 2: Open the external data file
@@ -99,6 +190,9 @@ int main()
         }
     }
 
+    
+
+
     // --------------------------------------------------------
     // STEP 6: Display FINAL STATE of BelloCorp after simulation
     // --------------------------------------------------------
@@ -122,7 +216,7 @@ int main()
 //          organized by their type (Manager, Entry-Level, Intern)
 // Parameters: department name (string), array of three lists (employees by type)
 
-void displayDepartment(string deptName, array<list<string>, 3> employees) {
+void displayDepartment(string deptName, array<list<string>, ARR_SIZE> employees) {
     // // Print the department name as a header
 
     // // Print each of the three employee type categories:
@@ -141,7 +235,7 @@ void displayDepartment(string deptName, array<list<string>, 3> employees) {
 // Purpose: Simulate a hiring surge by adding employees to a department
 // Parameters: reference to the map (so changes persist), department name (string)
 
-void hiringEvent(map<string, array<list<string>, 3>>& workforce, string dept) {
+void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& workforce, string dept) {
     // // Randomly determine how many employees to hire (e.g., between 1 and 5)
 
     // // Randomly determine which employee type to hire (0=Manager, 1=Entry-Level, 2=Intern)
@@ -160,7 +254,7 @@ void hiringEvent(map<string, array<list<string>, 3>>& workforce, string dept) {
 // Purpose: Simulate a layoff by removing employees from a department
 // Parameters: reference to the map, department name (string)
 
-void layoffEvent(map<string, array<list<string>, 3>>& workforce, string dept) {
+void layoffEvent(map<string, array<list<string>, ARR_SIZE>>& workforce, string dept) {
     // Randomly determine which employee type category to lay off from
 
     // Make sure the chosen list is not empty before removing
