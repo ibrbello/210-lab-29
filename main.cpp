@@ -37,6 +37,8 @@ int main()
 
     // Write tests for displayDepartment
     // create test container
+    cout << "Testing display workforce function..." << endl;
+
     map<string, array<list<string>, ARR_SIZE>> testWorkforce;
     testWorkforce["Finance"][0].push_back("Alice");
     testWorkforce["HR"][0].push_back("Ibrahim");
@@ -54,7 +56,9 @@ int main()
     }
 
     // Test for hiringEvent() (use same test map)
-    cout << endl << endl;
+    cout << endl;
+    cout << "Testing hiring function..." << endl;
+
     // print out original state
     for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
     {
@@ -73,26 +77,36 @@ int main()
 
 
     // Test for layoffEvent() 
+    cout << endl;
+    cout << "Testing layoff function..." << endl;
+    
     map<string, array<list<string>, ARR_SIZE>> testWorkforce2;
-    // Randomly populate a department with 10 values
+    // Populate a department with workers from each role
     for (int i = 0; i < 10; i++) {
-        
+        testWorkforce2["Finance"][0].push_back("Alice");
+        testWorkforce2["Finance"][1].push_back("Bob");
+        testWorkforce2["Finance"][2].push_back("John");
     } 
-    testWorkforce["Finance"][0].push_back("Alice");
-    testWorkforce["HR"][0].push_back("Ibrahim");
-    testWorkforce["HR"][1].push_back("Bob");
 
+    // Find size of total workforce before-hand
+    int sizeBefore = testWorkforce2["Finance"][0].size()
+    + testWorkforce2["Finance"][1].size()
+    + testWorkforce2["Finance"][2].size();
 
+    layoffEvent(testWorkforce2, "Finance");
 
+    // Find size of total workforce afterward
+    int sizeAfter = testWorkforce2["Finance"][0].size()
+    + testWorkforce2["Finance"][1].size()
+    + testWorkforce2["Finance"][2].size();
+    
+    // compare the sizes. If there's a change, then the layoff worked
+    cout << "Size of workforce before layoff: " << sizeBefore << endl;
+    cout << "Size of workforce after layoff: " << sizeAfter << endl;
 
-
-
-
-
-
-
-
-
+    cout << "Checking for behavior with empty workforce..." << endl;
+    layoffEvent(emptyWorkforce, "Finance");
+    
 
     // --------------------------------------------------------
     // STEP 1: Declare the main data structure

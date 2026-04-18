@@ -10,9 +10,9 @@ dummy values and then call the function to verify correct output.
 Function 2: hiringEvent()
 This test will ensure that the hiring event did in fact add employees
 to the correct list. The test will create a small container of employees 
-and add some random values and print out the contents. 
-Then it will call hiringEvent() and then print out the contents, 
-so then the chnages can be verified. 
+and add some values 
+Then it will call hiringEvent(). The size of the container before and after
+the function call will be checked to determine whether people were hired.
 
 Function 3: layoffEvent()
 This test will be similar to the test for hiringEVent(), 
