@@ -1,0 +1,22 @@
+Bug Log
+This file documents the bugs found while coding and testing, and how they were resolved.
+
+Bug #1:
+
+Bug #2:
+
+Bug #3:
+
+Bug #4:
+
+Bug #5:
+
+Bug #6:
+
+Bug #7:
+
+Bug #8:
+
+Bug #9:
+
+Bug #10:

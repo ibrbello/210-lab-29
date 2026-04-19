@@ -1,15 +1,17 @@
 // COMSC-210 || Lab 29 | Ibrahim Bello
 // BelloCorp Workforce Simulation
-// Data Structures Project - Pseudocode & Wireframe
+
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <array>
 #include <list>
 #include <string>
-
+#include <ctime>
 using namespace std;
-const int ARR_SIZE = 3;
+
+const int NUM_ROLES = 3; // Manager, Entry-Level, Intern
+const int NUM_EMPS = 10; // number of employees added or removed per quarter
 const string depts[4] = {"Product","Finance","Marketing", "HR"};
 const string roles[3] = {"Manager", "Entry-Level", "Intern"};
 const string names[50] = {
@@ -24,11 +26,11 @@ const string names[50] = {
     "Opal", "Preston", "Rosa", "Scott", "Tina",
     "Uma", "Vince", "Willa", "Xander", "Yusuf"
 };
-void displayDepartment(string , array<list<string>, ARR_SIZE> );
+void displayDepartment(string , array<list<string>, NUM_ROLES> );
 
-void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
+void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
 
-void layoffEvent(map<string, array<list<string>, ARR_SIZE>>& , string );
+void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
 
 int main()
 {
@@ -40,7 +42,7 @@ int main()
     //   Key   = department name (string)
     //   Value = array of 3 lists (Managers, Entry-Level, Interns)
     // --------------------------------------------------------
-    map<string, array<list<string>, ARR_SIZE>> workforce;
+    map<string, array<list<string>, NUM_ROLES>> workforce;
 
     // --------------------------------------------------------
     // STEP 2: Open the external data file
@@ -142,7 +144,7 @@ int main()
 //          organized by their type (Manager, Entry-Level, Intern)
 // Parameters: department name (string), array of three lists (employees by type)
 
-void displayDepartment(string deptName, array<list<string>, ARR_SIZE> employees) {
+void displayDepartment(string deptName, array<list<string>, NUM_ROLES> employees) {
     // // Print the department name as a header
 
     // // Print each of the three employee type categories:
@@ -161,12 +163,13 @@ void displayDepartment(string deptName, array<list<string>, ARR_SIZE> employees)
 // Purpose: Simulate a hiring surge by adding employees to a department
 // Parameters: reference to the map (so changes persist), department name (string)
 
-void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& workforce, string dept) {
-    // // Randomly determine how many employees to hire (e.g., between 1 and 5)
-
+void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string dept) {
+    // Randomly determine how many employees to hire (1-10)
+    int num_emps = rand() % 10 + 1;
     // // Randomly determine which employee type to hire (0=Manager, 1=Entry-Level, 2=Intern)
-
-    // // Add that many new employee names to the correct list in the department's array
+    int dept_idx = rand() % 2;
+    // Add that many new employee names to the correct list in the department's array
+    // // for Loop num_emps times. For each run, pick random
 
     // // Print a message announcing the hiring event, e.g.:
     // //   "HIRING SURGE in [dept]: Added [n] new [type] employee(s)."
@@ -180,7 +183,7 @@ void hiringEvent(map<string, array<list<string>, ARR_SIZE>>& workforce, string d
 // Purpose: Simulate a layoff by removing employees from a department
 // Parameters: reference to the map, department name (string)
 
-void layoffEvent(map<string, array<list<string>, ARR_SIZE>>& workforce, string dept) {
+void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string dept) {
     // Randomly determine which employee type category to lay off from
 
     // Make sure the chosen list is not empty before removing
