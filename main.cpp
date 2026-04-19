@@ -2,12 +2,14 @@
 // BelloCorp Workforce Simulation
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <map>
 #include <array>
 #include <list>
 #include <string>
 #include <ctime>
+
 using namespace std;
 
 const int NUM_EMPS = 10; // number of employees added or removed per quarter
@@ -149,20 +151,23 @@ int main()
 //          organized by their type (Manager, Entry-Level, Intern)
 // Parameters: department name (string), array of three lists (employees by type)
 
-void displayDepartment(string deptName, array<list<string>, NUM_ROLES> employees) {
+void displayDepartment(string deptName, array<list<string>, NUM_ROLES> department_emps) {
     // // Print the department name as a header
     cout << "=== Department: " << deptName << " ===" << endl;
 
     // Trying to print using a nested loop, instead of 3 separate loops for each role
-    string roles[NUM_ROLES] = {"Managers", "Entry-Level Associates", "Interns"};
-    // // For each category, iterate through the list and print each employee name
-    for (string role : roles) {
-        
+    string role_names[NUM_ROLES] = {"Managers", "Entry-Level Associates", "Interns"};
+    // // For each role category, iterate through the list and print each employee name
+    for (int i = 0; i <= 2; i++) {
+        cout << role_names[i] << ": {";
+        // Loop through each role within the department and print out the name of each employee
+        // The employe variable should be the value within the list, which is a string
+        for (auto employee : department_emps[i]) {
+            cout << employee << ", ";
+        }
+        cout << "}" << endl;
     }
-    // --- WIREFRAME (dummy output to demonstrate function works) ---
-    cout << "  Managers:     [list of manager names]" << endl;
-    cout << "  Entry-Level:  [list of entry-level names]" << endl;
-    cout << "  Interns:      [list of intern names]" << endl;
+  
 }
 
 // FUNCTION: hiringEvent
