@@ -32,7 +32,7 @@ const string names[NUM_NAMES] = {
     "Uma", "Vince", "Willa", "Xander", "Yusuf"
 };
 
-void displayDepartment(const string , array<list<string>, NUM_ROLES> & );
+void displayDepartment(const string , const array<list<string>, NUM_ROLES> & );
 void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
 void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
 int departmentSize( const array<list<string>, NUM_ROLES> &);
@@ -45,13 +45,10 @@ int main()
 
   // Write tests for displayDepartment
     // create test container
-    cout << "Testing display workforce function..." << endl;
+    cout << "Testing display department function..." << endl;
 
     map<string, array<list<string>, NUM_ROLES>> testWorkforce;
     testWorkforce["Finance"][0].push_back("Alice");
-    displayDepartment("Finance", testWorkforce["Finance"]);
-
-    /*
     testWorkforce["HR"][0].push_back("Ibrahim");
     testWorkforce["HR"][1].push_back("Bob");
     // ensure correct output
@@ -60,12 +57,13 @@ int main()
         displayDepartment(it->first, it->second);
     }
     // Should cout  error message
+    cout << "Testing display department function on empty department..." << endl;
     map<string, array<list<string>, NUM_ROLES>> emptyWorkforce;
     for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
     {
+        cout << "Within the loop..." << endl;
         displayDepartment(it->first, it->second);
     }
-        */
     
     /*
     // Test for departmentSize()

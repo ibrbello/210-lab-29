@@ -13,8 +13,14 @@ Bug #3:
 When I tested my departmentSize function, the first test was working but the second one
 wasn't. The issue was that in the second test, I was adding the employees to the first 
 department (testDept) instead of the second one (testDept2).
-Bug #4:
 
+Bug #4:
+While testing my displayDepartment function, I was getting an error during compilation
+that I didn't understand. So I asked Claude to help me debug, and it said that
+the error was a linker error, which meant that there was some sort of mismatch
+between my arguments and parameters. It turns out I was passing the department
+as a constant reference in the function prototype, but forgot to add the const
+keyword in the actual function definition.
 Bug #5:
 
 Bug #6:
