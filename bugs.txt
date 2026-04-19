@@ -2,7 +2,8 @@ Bug Log
 This file documents the bugs found while coding and testing, and how they were resolved.
 
 Bug #1:
-
+When I tested my displayDepartment function, the function didn't 
+do anything when I passed an empty department. 
 Bug #2:
 
 Bug #3:

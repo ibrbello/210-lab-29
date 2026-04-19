@@ -88,4 +88,10 @@ correctly with an empty container.
 
     cout << "Checking for behavior with empty workforce..." << endl;
     layoffEvent(emptyWorkforce, "Finance");
+
+Function 4: departmentSize()
+This test will create department containers (arrays) of various sizes
+(including an empty one) and ensure that the function returns the correct size. 
+
+Test:
     

@@ -31,17 +31,49 @@ const string names[NUM_NAMES] = {
     "Opal", "Preston", "Rosa", "Scott", "Tina",
     "Uma", "Vince", "Willa", "Xander", "Yusuf"
 };
-void displayDepartment(string , array<list<string>, NUM_ROLES> );
 
+void displayDepartment(const string , array<list<string>, NUM_ROLES> & );
 void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
-
 void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
+int departmentSize( const array<list<string>, NUM_ROLES> &, string );
+
 
 int main()
 {
     srand(time(0));
 
-  
+  // Write tests for displayDepartment
+    // create test container
+    cout << "Testing display workforce function..." << endl;
+
+    map<string, array<list<string>, NUM_ROLES>> testWorkforce;
+    testWorkforce["Finance"][0].push_back("Alice");
+    testWorkforce["HR"][0].push_back("Ibrahim");
+    testWorkforce["HR"][1].push_back("Bob");
+    // ensure correct output
+    for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+    // Should cout message error message
+    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce;
+    for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
+    {
+        displayDepartment(it->first, it->second);
+    }
+
+    // Test for departmentSize()
+    array<list<string>, NUM_ROLES> testDept;
+      // Populate the department with workers from each role 
+      for (int i = 0; i < 10; i++) {
+        testDept[0].push_back("Alice");
+        testDept[1].push_back("Bob");
+        testDept[2].push_back("John");
+    } 
+
+
+
+
     /*
     // --------------------------------------------------------
     // STEP 1: Declare the main data structure
@@ -151,9 +183,12 @@ int main()
 //          organized by their type (Manager, Entry-Level, Intern)
 // Parameters: department name (string), array of three lists (employees by type)
 
-void displayDepartment(string deptName, array<list<string>, NUM_ROLES> department_emps) {
+void displayDepartment(string deptName, const array<list<string>, NUM_ROLES> & department_emps) {
     // // Print the department name as a header
     cout << "=== Department: " << deptName << " ===" << endl;
+
+    // Print message if department is empty
+
 
     // Trying to print using a nested loop, instead of 3 separate loops for each role
     string role_names[NUM_ROLES] = {"Managers", "Entry-Level Associates", "Interns"};
@@ -210,4 +245,19 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
     {
         workforce[dept][2].pop_front();  // dummy: remove first intern
     }
+}
+
+// FUNCTION: departmentSize
+// Purpose: Find the number of employees in a department across all roles
+// Since I need to find the size of a department several times in the program
+// (testing whether hiring/layoff worked, determining whether a department is empty)
+// I've decided to add this function
+// Parameters: reference to the map, department name (string)
+int departmentSize(const array<list<string>, NUM_ROLES> & department_emps, string deptName ) {
+    int deptSize = 0;
+    // Iterate over the array, summing the size of each list
+    for (int i = 0; i > NUM_ROLES; i++) {
+        deptSize += department_emps[i].size();
+    }
+    return deptSize;
 }
