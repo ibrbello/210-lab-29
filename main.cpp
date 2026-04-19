@@ -38,7 +38,9 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
 int main()
 {
     srand(time(0));
-    
+
+  
+    /*
     // --------------------------------------------------------
     // STEP 1: Declare the main data structure
     // A map where:
@@ -138,7 +140,7 @@ int main()
     {
         displayDepartment(it->first, it->second);
     }
-
+    */
     return 0;
 }
 
@@ -149,14 +151,15 @@ int main()
 
 void displayDepartment(string deptName, array<list<string>, NUM_ROLES> employees) {
     // // Print the department name as a header
-
-    // // Print each of the three employee type categories:
-    // //   Index 0 = Managers, Index 1 = Entry-Level, Index 2 = Interns
-
-    // // For each category, iterate through the list and print each employee name
-
-    // --- WIREFRAME (dummy output to demonstrate function works) ---
     cout << "=== Department: " << deptName << " ===" << endl;
+
+    // Trying to print using a nested loop, instead of 3 separate loops for each role
+    string roles[NUM_ROLES] = {"Managers", "Entry-Level Associates", "Interns"};
+    // // For each category, iterate through the list and print each employee name
+    for (string role : roles) {
+        
+    }
+    // --- WIREFRAME (dummy output to demonstrate function works) ---
     cout << "  Managers:     [list of manager names]" << endl;
     cout << "  Entry-Level:  [list of entry-level names]" << endl;
     cout << "  Interns:      [list of intern names]" << endl;
@@ -176,11 +179,7 @@ void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
         string emp_name = names[rand() % NUM_NAMES];
         workforce[dept][role].push_back(emp_name);
     }
-
     // // Print a message announcing the hiring event, e.g.:
-    // //   "HIRING SURGE in [dept]: Added [n] new [type] employee(s)."
-
-    // --- WIREFRAME (dummy output to demonstrate function works) ---
     cout << "[EVENT] Hiring Surge in " << dept << ": Added " << num_emps << " new employee(s)." << endl;
 }
 
