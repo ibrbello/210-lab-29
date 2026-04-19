@@ -4,10 +4,15 @@ This file documents the bugs found while coding and testing, and how they were r
 Bug #1:
 When I tested my displayDepartment function, the function didn't 
 do anything when I passed an empty department. 
+
 Bug #2:
+When I tested my departmentSize function, it was always returning 0. It turns out
+my for loops were off in my test: I had (int i = 0; i > 10; i++) instead of i > 10
 
 Bug #3:
-
+When I tested my departmentSize function, the first test was working but the second one
+wasn't. The issue was that in the second test, I was adding the employees to the first 
+department (testDept) instead of the second one (testDept2).
 Bug #4:
 
 Bug #5:

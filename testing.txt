@@ -94,4 +94,30 @@ This test will create department containers (arrays) of various sizes
 (including an empty one) and ensure that the function returns the correct size. 
 
 Test:
-    
+  // Test for departmentSize()
+    array<list<string>, NUM_ROLES> testDept;
+      // Populate the department with workers from each role 
+      for (int i = 0; i < 10; i++) {
+        testDept[0].push_back("Alice");
+        testDept[1].push_back("Bob");
+        testDept[2].push_back("John");
+    } 
+    cout << "The size of the first department should be 30 people." << endl;
+    cout << "The size of the first department is: " << departmentSize(testDept) << endl;
+
+    // Test with different number of employees in each role
+    array<list<string>, NUM_ROLES> testDept2;
+    for (int j = 0; j < 10; j++) {
+        testDept2[0].push_back("Alice");
+        if (j % 2 == 0) {
+            testDept2[1].push_back("Bob");
+        }
+        if (j % 3 == 0) {
+            testDept2[2].push_back("John");
+        }
+    }
+    cout << "The size of the second department is: " << departmentSize(testDept2) << endl;
+
+    // Test with empty department
+    array<list<string>, NUM_ROLES> emptyDept;
+    cout << "The size of the empty department is: " << departmentSize(emptyDept) << endl;

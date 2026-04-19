@@ -35,12 +35,13 @@ const string names[NUM_NAMES] = {
 void displayDepartment(const string , array<list<string>, NUM_ROLES> & );
 void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
 void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& , string );
-int departmentSize( const array<list<string>, NUM_ROLES> &, string );
+int departmentSize( const array<list<string>, NUM_ROLES> &);
 
 
 int main()
 {
     srand(time(0));
+
 
   // Write tests for displayDepartment
     // create test container
@@ -48,6 +49,9 @@ int main()
 
     map<string, array<list<string>, NUM_ROLES>> testWorkforce;
     testWorkforce["Finance"][0].push_back("Alice");
+    displayDepartment("Finance", testWorkforce["Finance"]);
+
+    /*
     testWorkforce["HR"][0].push_back("Ibrahim");
     testWorkforce["HR"][1].push_back("Bob");
     // ensure correct output
@@ -55,13 +59,15 @@ int main()
     {
         displayDepartment(it->first, it->second);
     }
-    // Should cout message error message
+    // Should cout  error message
     map<string, array<list<string>, NUM_ROLES>> emptyWorkforce;
     for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
     {
         displayDepartment(it->first, it->second);
     }
-
+        */
+    
+    /*
     // Test for departmentSize()
     array<list<string>, NUM_ROLES> testDept;
       // Populate the department with workers from each role 
@@ -70,9 +76,26 @@ int main()
         testDept[1].push_back("Bob");
         testDept[2].push_back("John");
     } 
+    cout << "The size of the first department should be 30 people." << endl;
+    cout << "The size of the first department is: " << departmentSize(testDept) << endl;
 
+    // Test with different number of employees in each role
+    array<list<string>, NUM_ROLES> testDept2;
+    for (int j = 0; j < 10; j++) {
+        testDept2[0].push_back("Alice");
+        if (j % 2 == 0) {
+            testDept2[1].push_back("Bob");
+        }
+        if (j % 3 == 0) {
+            testDept2[2].push_back("John");
+        }
+    }
+    cout << "The size of the second department is: " << departmentSize(testDept2) << endl;
 
-
+    // Test with empty department
+    array<list<string>, NUM_ROLES> emptyDept;
+    cout << "The size of the empty department is: " << departmentSize(emptyDept) << endl;
+    */
 
     /*
     // --------------------------------------------------------
@@ -188,7 +211,11 @@ void displayDepartment(string deptName, const array<list<string>, NUM_ROLES> & d
     cout << "=== Department: " << deptName << " ===" << endl;
 
     // Print message if department is empty
-
+    int deptSize = departmentSize(department_emps);
+    if (deptSize == 0) {
+        cout << "The department is empty." << endl;
+        return;
+    }
 
     // Trying to print using a nested loop, instead of 3 separate loops for each role
     string role_names[NUM_ROLES] = {"Managers", "Entry-Level Associates", "Interns"};
@@ -215,7 +242,7 @@ void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
     // // Randomly determine which employee type to hire (0=Manager, 1=Entry-Level, 2=Intern)
     int role = roles[rand() % NUM_ROLES];
     // // For Loop num_emps times. For each run, pick random name and add it to the correct list
-    for (int i = 0; i > num_emps; i++) {
+    for (int i = 0; i < num_emps; i++) {
         string emp_name = names[rand() % NUM_NAMES];
         workforce[dept][role].push_back(emp_name);
     }
@@ -253,10 +280,10 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
 // (testing whether hiring/layoff worked, determining whether a department is empty)
 // I've decided to add this function
 // Parameters: reference to the map, department name (string)
-int departmentSize(const array<list<string>, NUM_ROLES> & department_emps, string deptName ) {
+int departmentSize(const array<list<string>, NUM_ROLES> & department_emps) {
     int deptSize = 0;
     // Iterate over the array, summing the size of each list
-    for (int i = 0; i > NUM_ROLES; i++) {
+    for (int i = 0; i < NUM_ROLES; i++) {
         deptSize += department_emps[i].size();
     }
     return deptSize;
