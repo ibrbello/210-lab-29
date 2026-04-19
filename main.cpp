@@ -10,11 +10,14 @@
 #include <ctime>
 using namespace std;
 
-const int NUM_ROLES = 3; // Manager, Entry-Level, Intern
 const int NUM_EMPS = 10; // number of employees added or removed per quarter
-const string depts[4] = {"Product","Finance","Marketing", "HR"};
-const string roles[3] = {"Manager", "Entry-Level", "Intern"};
-const string names[50] = {
+const int NUM_ROLES = 3, NUM_NAMES = 50, NUM_DEPTS = 4;
+const string depts[NUM_DEPTS] = {"Product","Finance","Marketing", "HR"};
+// Because the roles are represented by lists and not maps, I'll just
+// refer to each role by its index within the code. In the output it'll be clear
+// which employees are represented by which roles
+const int roles[NUM_ROLES] = {0,1,2}; // 0 = Manager,  1 = Entry-Level,  2 = Intern
+const string names[NUM_NAMES] = {
     "Alice", "Brandon", "Carmen", "Derek", "Elena",
     "Felix", "Grace", "Henry", "Isla", "Jordan",
     "Kara", "Liam", "Maya", "Noah", "Olivia",
@@ -167,16 +170,18 @@ void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
     // Randomly determine how many employees to hire (1-10)
     int num_emps = rand() % 10 + 1;
     // // Randomly determine which employee type to hire (0=Manager, 1=Entry-Level, 2=Intern)
-    int dept_idx = rand() % 2;
-    // Add that many new employee names to the correct list in the department's array
-    // // for Loop num_emps times. For each run, pick random
+    int role = roles[rand() % NUM_ROLES];
+    // // For Loop num_emps times. For each run, pick random name and add it to the correct list
+    for (int i = 0; i > num_emps; i++) {
+        string emp_name = names[rand() % NUM_NAMES];
+        workforce[dept][role].push_back(emp_name);
+    }
 
     // // Print a message announcing the hiring event, e.g.:
     // //   "HIRING SURGE in [dept]: Added [n] new [type] employee(s)."
 
     // --- WIREFRAME (dummy output to demonstrate function works) ---
-    cout << "[EVENT] Hiring Surge in " << dept << ": Added 3 new Entry-Level employee(s)." << endl;
-    workforce[dept][1].push_back("New_Hire_Dummy");  // dummy: add one name to entry-level list
+    cout << "[EVENT] Hiring Surge in " << dept << ": Added " << num_emps << " new employee(s)." << endl;
 }
 
 // FUNCTION: layoffEvent
