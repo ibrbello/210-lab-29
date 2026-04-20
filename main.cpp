@@ -46,8 +46,8 @@ int main()
    cout << "Testing hiring function..." << endl;
    // initialize empty workforce map
    map<string, array<list<string>, NUM_ROLES>> testWorkforce = {
-    {depts[1], {{{},{},{}}}},
     {depts[0], {{{},{},{}}}},
+    {depts[1], {{{},{},{}}}},
     {depts[2], {{{},{},{}}}},
     {depts[3], {{{},{},{}}}}};
 
@@ -205,16 +205,16 @@ void displayDepartment(string deptName, const array<list<string>, NUM_ROLES> & d
 
 void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string dept) {
     // Randomly determine how many employees to hire (1-10)
-    int num_emps = rand() % 10 + 1;
-    // // Randomly determine which employee type to hire (0=Manager, 1=Entry-Level, 2=Intern)
-    int role = roles[rand() % NUM_ROLES];
-    // // For Loop num_emps times. For each run, pick random name and add it to the correct list
-    for (int i = 0; i < num_emps; i++) {
+    int hire_size = rand() % NUM_EMPS + 1;
+    // For Loop num_emps times. For each run, pick random name and role, and add employee
+    for (int i = 0; i < hire_size; i++) {
+        // // Randomly determine which employee type to hire (0=Manager, 1=Entry-Level, 2=Intern)
+        int role = roles[rand() % NUM_ROLES];
         string emp_name = names[rand() % NUM_NAMES];
         workforce[dept][role].push_back(emp_name);
     }
-    // // Print a message announcing the hiring event, e.g.:
-    cout << "[EVENT] Hiring Surge in " << dept << ": Added " << num_emps << " new employee(s)." << endl;
+    // // Print a message announcing the hiring event
+    cout << "[EVENT] Hiring Surge in " << dept << ": Added " << hire_size << " new employee(s)." << endl;
 }
 
 // FUNCTION: layoffEvent
@@ -222,23 +222,45 @@ void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
 // Parameters: reference to the map, department name (string)
 
 void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string dept) {
-    // Randomly determine which employee type category to lay off from
-
-    // Make sure the chosen list is not empty before removing
-
-    // Randomly determine how many employees to remove (cannot exceed list size)
-
-    // Remove that many employees from the list
-
-    // Print a message announcing the layoff, e.g.:
-    // "LAYOFF in [dept]: Removed [n] [type] employee(s)."
-
-    // --- WIREFRAME (dummy output to demonstrate function works) ---
-    cout << "[EVENT] Layoff in " << dept << ": Removed 1 Intern(s)." << endl;
-    if (!workforce[dept][2].empty())
-    {
-        workforce[dept][2].pop_front();  // dummy: remove first intern
+    // If department is empty, print message and don't layoff
+    if (departmentSize(workforce[dept]) == 0) {
+        cout << "[EVENT] Layoff in " << dept << ": The department had no employees, \
+        so no one was laid off." << endl;
+        return;
     }
+    // Randomly determine how many employees to hire (1-10)
+    int layoff_size = rand() % NUM_EMPS + 1;
+
+    // If a layoff doesn't actually happen because there were no employees in that role,
+    // this variable won't be incremented. That way, the outputted number of layoffs is accurate
+    int layoffs_completed = 0;
+
+    // For loop num_emps times. For each iteration, determine which role to fire from
+    // and pick a random name from the list
+    for (int i = 0; i < layoff_size; i++) {
+        // Randomly determine which employee type category to lay off from
+        int role = roles[rand() % NUM_ROLES];
+        // Make sure that specific role is not empty
+        auto doomed_role = workforce[dept][role];
+        int role_size = doomed_role.size();
+        if (role_size == 0) {
+            // Don't layoff, just move on
+            continue;
+        }
+        else {
+            // Pick a random person. Can't use [rand % ] bc lists don't have random
+            // access, so use iterators
+            auto it = doomed_role.begin();
+            advance(it, rand() % role_size);
+            // Now that the iterator is pointing to the right employee, fire them
+            doomed_role.erase(it);
+            // Successful layoff, so increment layoff counter
+            layoffs_completed++;
+        }
+    }
+    // Print a message announcing the layoff
+    cout << "[EVENT] Layoff in " << dept << ": Fired " << layoffs_completed << " employees." << endl;
+
 }
 
 // FUNCTION: departmentSize
