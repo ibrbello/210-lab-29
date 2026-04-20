@@ -10,9 +10,9 @@ dummy values and then call the function to verify correct output.
 Test:
 // Write tests for displayDepartment
     // create test container
-    cout << "Testing display workforce function..." << endl;
+    cout << "Testing display department function..." << endl;
 
-    map<string, array<list<string>, ARR_SIZE>> testWorkforce;
+    map<string, array<list<string>, NUM_ROLES>> testWorkforce;
     testWorkforce["Finance"][0].push_back("Alice");
     testWorkforce["HR"][0].push_back("Ibrahim");
     testWorkforce["HR"][1].push_back("Bob");
@@ -21,13 +21,27 @@ Test:
     {
         displayDepartment(it->first, it->second);
     }
-    // Should cout message error message
-    map<string, array<list<string>, ARR_SIZE>> emptyWorkforce;
+    // Should cout  error message
+    cout << "Testing display department function on empty workforce..." << endl;
+    // This is an incorrect representation of an empty workforce
+    //map<string, array<list<string>, NUM_ROLES>> emptyWorkforce;
+
+    // Actual empty workforce:
+    // 4 layers of braces: 1st for each key-value pair, 2nd for the value of the pair,
+    // 3rd for initializing the array within the keyed value, and 4th for the empty lists 
+    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce = {
+        {"Finance", {{{},{},{}}}},
+        {"Product", {{{},{},{}}}},
+        {"Marketing", {{{},{},{}}}},
+        {"HR", {{{},{},{}}}}};
     for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
     {
+        // Print check to make sure the loop wasn't skipped
+        cout << "Within the loop..." << endl;
         displayDepartment(it->first, it->second);
     }
-
+    cout << endl;
+    
 Function 2: hiringEvent()
 This test will ensure that the hiring event did in fact add employees
 to the correct list. The test will create a small container of employees 
@@ -95,6 +109,7 @@ This test will create department containers (arrays) of various sizes
 
 Test:
   // Test for departmentSize()
+    cout << "Testing departmentSize() function..." << endl;
     array<list<string>, NUM_ROLES> testDept;
       // Populate the department with workers from each role 
       for (int i = 0; i < 10; i++) {
@@ -118,6 +133,9 @@ Test:
     }
     cout << "The size of the second department is: " << departmentSize(testDept2) << endl;
 
-    // Test with empty department
-    array<list<string>, NUM_ROLES> emptyDept;
+    // Test with proper empty department
+    cout << "Testing departmentSize() function on empty department..." << endl;
+    array<list<string>, NUM_ROLES> emptyDept = {
+        {{},{},{}} };
     cout << "The size of the empty department is: " << departmentSize(emptyDept) << endl;
+    

@@ -57,16 +57,29 @@ int main()
         displayDepartment(it->first, it->second);
     }
     // Should cout  error message
-    cout << "Testing display department function on empty department..." << endl;
-    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce;
+    cout << "Testing display department function on empty workforce..." << endl;
+    // This is an incorrect representation of an empty workforce
+    //map<string, array<list<string>, NUM_ROLES>> emptyWorkforce;
+
+    // Actual empty workforce:
+    // 4 layers of braces: 1st for each key-value pair, 2nd for the value of the pair,
+    // 3rd for initializing the array within the keyed value, and 4th for the empty lists 
+    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce = {
+        {"Finance", {{{},{},{}}}},
+        {"Product", {{{},{},{}}}},
+        {"Marketing", {{{},{},{}}}},
+        {"HR", {{{},{},{}}}}};
     for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
     {
+        // Print check to make sure the loop wasn't skipped
         cout << "Within the loop..." << endl;
         displayDepartment(it->first, it->second);
     }
+    cout << endl;
     
-    /*
+    
     // Test for departmentSize()
+    cout << "Testing departmentSize() function..." << endl;
     array<list<string>, NUM_ROLES> testDept;
       // Populate the department with workers from each role 
       for (int i = 0; i < 10; i++) {
@@ -90,10 +103,12 @@ int main()
     }
     cout << "The size of the second department is: " << departmentSize(testDept2) << endl;
 
-    // Test with empty department
-    array<list<string>, NUM_ROLES> emptyDept;
+    // Test with proper empty department
+    cout << "Testing departmentSize() function on empty department..." << endl;
+    array<list<string>, NUM_ROLES> emptyDept = {
+        {{},{},{}} };
     cout << "The size of the empty department is: " << departmentSize(emptyDept) << endl;
-    */
+    
 
     /*
     // --------------------------------------------------------

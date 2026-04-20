@@ -22,7 +22,11 @@ between my arguments and parameters. It turns out I was passing the department
 as a constant reference in the function prototype, but forgot to add the const
 keyword in the actual function definition.
 Bug #5:
-
+While testing my displayDepartment function, I noticed that the function didn't
+display anything when I passed in an empty uninitialized map. The issue was actually
+in my test, since I should have initialized the map with empty arrays of lists
+as the values, to better simulate what the workforce map used in the program
+would actually look like.
 Bug #6:
 
 Bug #7:
