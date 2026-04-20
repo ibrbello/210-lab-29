@@ -12,4 +12,4 @@ More events may be added in future updates.
 
 At any given time period, either a lay off, hiring surge, or no event may occur. 
 Each time period represents a quarter of the fiscal year. This simulation will simulate an 10-year period,
-so there will be 40 time periods.
+between January 2026 and December 2035, so there will be 40 time periods. 

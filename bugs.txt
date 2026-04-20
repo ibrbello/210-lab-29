@@ -1,0 +1,57 @@
+Bug Log
+This file documents the bugs found while coding and testing, and how they were resolved.
+
+Bug #1:
+When I tested my displayDepartment function, the function didn't 
+do anything when I passed an empty department. 
+
+Bug #2:
+When I tested my departmentSize function, it was always returning 0. It turns out
+my for loops were off in my test: I had (int i = 0; i > 10; i++) instead of i > 10
+
+Bug #3:
+When I tested my departmentSize function, the first test was working but the second one
+wasn't. The issue was that in the second test, I was adding the employees to the first 
+department (testDept) instead of the second one (testDept2).
+
+Bug #4:
+While testing my displayDepartment function, I was getting an error during compilation
+that I didn't understand. So I asked Claude to help me debug, and it said that
+the error was a linker error, which meant that there was some sort of mismatch
+between my arguments and parameters. It turns out I was passing the department
+as a constant reference in the function prototype, but forgot to add the const
+keyword in the actual function definition.
+Bug #5:
+While testing my displayDepartment function, I noticed that the function didn't
+display anything when I passed in an empty uninitialized map. The issue was actually
+in my test, since I should have initialized the map with empty arrays of lists
+as the values, to better simulate what the workforce map used in the program
+would actually look like.
+
+Bug #6:
+While working on the layoffEvent function, I ran into an issue with figuring out
+how to use rand() to pick a random name from the role container. I resolved the issue
+by using iterators.
+
+Bug #7:
+While testing the layoffEvent, I found that the function wasn't working properly.
+The cout statements that I placed in the function loop were printing, but the actual 
+workforce container wasn't changing at all. It turns out I was missing the & operator on this line: 
+        auto & doomed_role = workforce[dept][role];
+Once I added the &, the changes were reflected in the original container.
+
+Bug #8:
+While testing the main function, I was confused because all the cases were running at once,
+instead of one being chosen. Then i noticed that I forgot the break statement in each case.
+
+Bug #9:
+While testing the main function, the file input wasn't working properly; the workforce container
+was not being populated at all. The issue was that I was trying to read in a string from the file
+into th temporary role variable. To fix this, I made the role variable a string, and then 
+used if statements to determine the role index variable.
+
+Bug #10:
+When I ran my function, I saw that there were no layoffs happening, only hiring surges
+The issue was that my event variable was   int event = rand() % 2; so the variable
+could only take on values of 0 and 1. Once I changed that line to 
+int event = rand() % 3; everything worked fine.
