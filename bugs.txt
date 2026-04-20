@@ -27,9 +27,18 @@ display anything when I passed in an empty uninitialized map. The issue was actu
 in my test, since I should have initialized the map with empty arrays of lists
 as the values, to better simulate what the workforce map used in the program
 would actually look like.
+
 Bug #6:
+While working on the layoffEvent function, I ran into an issue with figuring out
+how to use rand() to pick a random name from the role container. I resolved the issue
+by using iterators.
 
 Bug #7:
+While testing the layoffEvent, I found that the function wasn't working properly.
+The cout statements that I placed in the function loop were printing, but the actual 
+workforce container wasn't changing at all. It turns out I was missing the & operator on this line: 
+        auto & doomed_role = workforce[dept][role];
+Once I added the &, the changes were reflected in the original container.
 
 Bug #8:
 

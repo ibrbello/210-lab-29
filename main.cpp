@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const int NUM_EMPS = 10; // number of employees added or removed per quarter
+const int NUM_EMPS = 5; // number of employees added or removed per quarter
 const int NUM_ROLES = 3, NUM_NAMES = 50, NUM_DEPTS = 4;
 const string depts[NUM_DEPTS] = {"Product","Finance","Marketing", "HR"};
 // Because the roles are represented by lists and not maps, I'll just
@@ -42,29 +42,50 @@ int main()
 {
     srand(time(0));
 
-   // Test for hiringEvent() 
-   cout << "Testing hiring function..." << endl;
-   // initialize empty workforce map
-   map<string, array<list<string>, NUM_ROLES>> testWorkforce = {
-    {depts[0], {{{},{},{}}}},
-    {depts[1], {{{},{},{}}}},
-    {depts[2], {{{},{},{}}}},
-    {depts[3], {{{},{},{}}}}};
+       // Test for layoffEvent() 
+       cout << "Testing layoff function..." << endl;
+       // initialize test container
+       map<string, array<list<string>, NUM_ROLES>> testWorkforce2 = {
+        {"Finance", {{{},{},{}}}},
+        {"Product", {{{},{},{}}}},
+        {"Marketing", {{{},{},{}}}},
+        {"HR", {{{},{},{}}}}};
 
-   // print out original state
-   for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
-   {
-       displayDepartment(it->first, it->second);
-   }
-   // Check that the hiring event worked for different departments
-   hiringEvent(testWorkforce, depts[1]);
-   displayDepartment(depts[1], testWorkforce[depts[1]]);
+       // Populate a department with workers from each role
+       for (int i = 0; i < 10; i++) {
+           testWorkforce2["Finance"][0].push_back("Alice");
+           testWorkforce2["Finance"][1].push_back("Bob");
+           testWorkforce2["Finance"][2].push_back("John");
+       } 
 
-   hiringEvent(testWorkforce, depts[3]);
-   displayDepartment(depts[1], testWorkforce[depts[1]]);
-   displayDepartment(depts[3], testWorkforce[depts[3]]);
+       displayDepartment("Finance", testWorkforce2["Finance"]);
+       // Find size of total workforce before-hand
+       int sizeBefore = departmentSize(testWorkforce2["Finance"]);
+   
+       layoffEvent(testWorkforce2, "Finance");
+       displayDepartment("Finance", testWorkforce2["Finance"]);
+
+   
+       // Find size of total workforce afterward
+       int sizeAfter = departmentSize(testWorkforce2["Finance"]);
+       
+       // compare the sizes. If there's a change, then the layoff worked
+       cout << "Size of workforce before layoff: " << sizeBefore << endl;
+       cout << "Size of workforce after layoff: " << sizeAfter << endl;
 
 
+    cout << "Checking for behavior with empty workforce..." << endl;
+    // initialize empty workforce map
+    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce = {
+        {"Finance", {{{},{},{}}}},
+        {"Product", {{{},{},{}}}},
+        {"Marketing", {{{},{},{}}}},
+        {"HR", {{{},{},{}}}}};
+
+   
+       layoffEvent(emptyWorkforce, "Finance");
+       displayDepartment("Finance", emptyWorkforce["Finance"]);
+   
     /*
     // --------------------------------------------------------
     // STEP 1: Declare the main data structure
@@ -224,8 +245,8 @@ void hiringEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
 void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string dept) {
     // If department is empty, print message and don't layoff
     if (departmentSize(workforce[dept]) == 0) {
-        cout << "[EVENT] Layoff in " << dept << ": The department had no employees, \
-        so no one was laid off." << endl;
+        cout << "[EVENT] Layoff in " << dept <<
+         ": The department had no employees, so no one was laid off." << endl;
         return;
     }
     // Randomly determine how many employees to hire (1-10)
@@ -241,10 +262,13 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
         // Randomly determine which employee type category to lay off from
         int role = roles[rand() % NUM_ROLES];
         // Make sure that specific role is not empty
-        auto doomed_role = workforce[dept][role];
+        auto & doomed_role = workforce[dept][role];
         int role_size = doomed_role.size();
+        // Print statement for testing
+        cout << "Size of doomed role: " << role_size << endl;
         if (role_size == 0) {
             // Don't layoff, just move on
+            cout << "Role is empty, so no layoffs." << endl;
             continue;
         }
         else {
@@ -253,6 +277,8 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
             auto it = doomed_role.begin();
             advance(it, rand() % role_size);
             // Now that the iterator is pointing to the right employee, fire them
+            // Print statement for testing
+            cout << "Doomed employee: " << *it << endl;
             doomed_role.erase(it);
             // Successful layoff, so increment layoff counter
             layoffs_completed++;
