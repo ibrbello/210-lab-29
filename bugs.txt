@@ -43,6 +43,15 @@ Once I added the &, the changes were reflected in the original container.
 Bug #8:
 While testing the main function, I was confused because all the cases were running at once,
 instead of one being chosen. Then i noticed that I forgot the break statement in each case.
+
 Bug #9:
+While testing the main function, the file input wasn't working properly; the workforce container
+was not being populated at all. The issue was that I was trying to read in a string from the file
+into th temporary role variable. To fix this, I made the role variable a string, and then 
+used if statements to determine the role index variable.
 
 Bug #10:
+When I ran my function, I saw that there were no layoffs happening, only hiring surges
+The issue was that my event variable was   int event = rand() % 2; so the variable
+could only take on values of 0 and 1. Once I changed that line to 
+int event = rand() % 3; everything worked fine.

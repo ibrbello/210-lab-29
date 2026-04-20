@@ -12,6 +12,7 @@
 
 using namespace std;
 
+const int NUM_QTRS = 40; // Number of time periods (quarters)
 const int NUM_EMPS = 10; // number of employees added or removed per quarter
 const int NUM_ROLES = 3, NUM_NAMES = 50, NUM_DEPTS = 4;
 const string depts[NUM_DEPTS] = {"Product","Finance","Marketing", "HR"};
@@ -70,7 +71,9 @@ int main()
             fin >> n;
         int role = 0;
         // convert the role name in the file to an index
-        if (r == "Manager") role = 0;
+        if      (r == "Manager") role = 0;
+        else if (r == "Entry-Level") role = 1;
+        else    role = 2;
             workforce[d][role].push_back(n);
         }
         fin.close();
@@ -85,18 +88,23 @@ int main()
     cout << "   BELLOCORP WORKFORCE - INITIAL STATE     " << endl;
     cout << "============================================" << endl;
 
+    int workforceSize = 0;
+
     // // Iterate through each entry in the map
     // // For each department, call displayDepartment()
 
     for (auto it = workforce.begin(); it != workforce.end(); it++)
     {
         displayDepartment(it->first, it->second);
+        workforceSize += departmentSize(it->second);
     }
 
+    cout << "\nIn January 2026, BelloCorp had " << workforceSize << " employees." << endl;
+
     // --------------------------------------------------------
-    // STEP 5: Run the discrete-event simulation (40 time periods)
+    // STEP 5: Run the discrete-event simulation (NUM_QTRS time periods)
     // --------------------------------------------------------
-    // // For each time period from 1 to 40:
+    // // For each time period from 1 to NUM_QTRS:
     // //   Print the current time period number
     // //   Randomly select a department from the map
     // //   Randomly decide which event occurs:
@@ -109,14 +117,14 @@ int main()
     cout << "============================================" << endl;
 
     // --- WIREFRAME: run just 3 dummy periods to show simulation flow ---
-    for (int period = 1; period <= 40; period++)
+    for (int period = 1; period <= NUM_QTRS; period++)
     {
         cout << "\n--- Quarter " << period << " ---" << endl;
         // // Pick random dept
         string chosen_dept = depts[rand() % NUM_DEPTS];
         // Randomly choose which event will occur in this period
         // 0 = nothing, 1 = hiring surge, 2 = layoff
-        int event = rand() % 2;
+        int event = rand() % 3;
 
         switch (event) {
             case 0:
@@ -144,13 +152,14 @@ int main()
     cout << "============================================" << endl;
 
     // // Iterate through the map again and call displayDepartment() for each
-
-    // --- WIREFRAME ---
+    int workforceSize2 = 0;
     for (auto it = workforce.begin(); it != workforce.end(); it++)
     {
         displayDepartment(it->first, it->second);
+        workforceSize2 += departmentSize(it->second);
     }
-    
+
+    cout << "\nBy December 2036, BelloCorp had " << workforceSize2 << " employees." << endl;
     return 0;
 }
 
@@ -161,6 +170,7 @@ int main()
 
 void displayDepartment(string deptName, const array<list<string>, NUM_ROLES> & department_emps) {
     // // Print the department name as a header
+    cout << endl;
     cout << "=== Department: " << deptName << " ===" << endl;
 
     // Print message if department is empty
@@ -170,7 +180,7 @@ void displayDepartment(string deptName, const array<list<string>, NUM_ROLES> & d
         return;
     }
 
-    // Trying to print using a nested loop, instead of 3 separate loops for each role
+    // Print using a nested loop, instead of 3 separate loops for each role
     string role_names[NUM_ROLES] = {"Managers", "Entry-Level Associates", "Interns"};
     // // For each role category, iterate through the list and print each employee name
     for (int i = 0; i <= 2; i++) {
@@ -244,15 +254,12 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
         }
     }
     // Print a message announcing the layoff
-    cout << "[EVENT] Layoff in " << dept << ": Fired " << layoffs_completed << " employees." << endl;
+    cout << "[EVENT] Layoff in " << dept << ": Fired " << layoffs_completed << " employees(s)." << endl;
 
 }
 
 // FUNCTION: departmentSize
 // Purpose: Find the number of employees in a department across all roles
-// Since I need to find the size of a department several times in the program
-// (testing whether hiring/layoff worked, determining whether a department is empty)
-// I've decided to add this function
 // Parameters: reference to the map, department name (string)
 int departmentSize(const array<list<string>, NUM_ROLES> & department_emps) {
     int deptSize = 0;
