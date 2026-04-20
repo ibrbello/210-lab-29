@@ -74,15 +74,26 @@ Test:
   
 
 Function 3: layoffEvent()
-This test will be similar to the test for hiringEVent(), 
-while also including a test that  ensures that the function behaves 
-correctly with an empty container.
+This test will be similar to the test for hiringEVent(). There will be
+three sets of tests: one with a workforce that is full (more employees than
+possible layoffs), another with a workforce that is almost empty (potential to
+have more attempted layoffs than employees), and another with an empty workforce.
+This test will evaluate the function's performance in all 3 scenarios. 
+Print statements are also added within the function to assess the function's logic.
 
-   // Test for layoffEvent() 
-    cout << endl;
+Test:
+
+    // Tests for layoffEvent() 
+    // TEST 1: Fully populated workforce
+
     cout << "Testing layoff function..." << endl;
-    
-    map<string, array<list<string>, ARR_SIZE>> testWorkforce2;
+    // initialize test container
+    map<string, array<list<string>, NUM_ROLES>> testWorkforce2 = {
+    {"Finance", {{{},{},{}}}},
+    {"Product", {{{},{},{}}}},
+    {"Marketing", {{{},{},{}}}},
+    {"HR", {{{},{},{}}}}};
+
     // Populate a department with workers from each role
     for (int i = 0; i < 10; i++) {
         testWorkforce2["Finance"][0].push_back("Alice");
@@ -90,24 +101,65 @@ correctly with an empty container.
         testWorkforce2["Finance"][2].push_back("John");
     } 
 
+    displayDepartment("Finance", testWorkforce2["Finance"]);
+
     // Find size of total workforce before-hand
-    int sizeBefore = testWorkforce2["Finance"][0].size()
-    + testWorkforce2["Finance"][1].size()
-    + testWorkforce2["Finance"][2].size();
+    int sizeBefore = departmentSize(testWorkforce2["Finance"]);
 
     layoffEvent(testWorkforce2, "Finance");
+    displayDepartment("Finance", testWorkforce2["Finance"]);
 
     // Find size of total workforce afterward
-    int sizeAfter = testWorkforce2["Finance"][0].size()
-    + testWorkforce2["Finance"][1].size()
-    + testWorkforce2["Finance"][2].size();
-    
+    int sizeAfter = departmentSize(testWorkforce2["Finance"]);
+
     // compare the sizes. If there's a change, then the layoff worked
     cout << "Size of workforce before layoff: " << sizeBefore << endl;
     cout << "Size of workforce after layoff: " << sizeAfter << endl;
 
+    // TEST 2: Near-empty workforce
+
+    cout << "Checking for behavior with empty roles..." << endl;
+    // initialize new workforce
+    map<string, array<list<string>, NUM_ROLES>> testWorkforce3 = {
+    {"Finance", {{{},{},{}}}},
+    {"Product", {{{},{},{}}}},
+    {"Marketing", {{{},{},{}}}},
+    {"HR", {{{},{},{}}}}};
+
+    // Only populate with a few employees, to determine behavior
+    // when a role is empty
+    for (int i = 0; i < 2; i++) {
+        testWorkforce3["Finance"][0].push_back("Alice");
+        testWorkforce3["Finance"][1].push_back("Bob");
+    } 
+
+    displayDepartment("Finance", testWorkforce3["Finance"]);
+    // Find size of total workforce before-hand
+    int sizeBefore2 = departmentSize(testWorkforce3["Finance"]);
+
+    layoffEvent(testWorkforce3, "Finance");
+    displayDepartment("Finance", testWorkforce3["Finance"]);
+
+    // Find size of total workforce afterward
+    int sizeAfter2 = departmentSize(testWorkforce3["Finance"]);
+
+    // compare the sizes. If there's a change, then the layoff worked
+    cout << "Size of workforce before layoff: " << sizeBefore2 << endl;
+    cout << "Size of workforce after layoff: " << sizeAfter2 << endl;
+
+    // TEST 3: Empty workforce
+
     cout << "Checking for behavior with empty workforce..." << endl;
+    // initialize empty workforce map
+    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce = {
+        {"Finance", {{{},{},{}}}},
+        {"Product", {{{},{},{}}}},
+        {"Marketing", {{{},{},{}}}},
+        {"HR", {{{},{},{}}}}};
+
     layoffEvent(emptyWorkforce, "Finance");
+    displayDepartment("Finance", emptyWorkforce["Finance"]);
+
 
 Function 4: departmentSize()
 This test will create department containers (arrays) of various sizes

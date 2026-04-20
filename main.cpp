@@ -12,7 +12,7 @@
 
 using namespace std;
 
-const int NUM_EMPS = 5; // number of employees added or removed per quarter
+const int NUM_EMPS = 10; // number of employees added or removed per quarter
 const int NUM_ROLES = 3, NUM_NAMES = 50, NUM_DEPTS = 4;
 const string depts[NUM_DEPTS] = {"Product","Finance","Marketing", "HR"};
 // Because the roles are represented by lists and not maps, I'll just
@@ -42,51 +42,7 @@ int main()
 {
     srand(time(0));
 
-       // Test for layoffEvent() 
-       cout << "Testing layoff function..." << endl;
-       // initialize test container
-       map<string, array<list<string>, NUM_ROLES>> testWorkforce2 = {
-        {"Finance", {{{},{},{}}}},
-        {"Product", {{{},{},{}}}},
-        {"Marketing", {{{},{},{}}}},
-        {"HR", {{{},{},{}}}}};
-
-       // Populate a department with workers from each role
-       for (int i = 0; i < 10; i++) {
-           testWorkforce2["Finance"][0].push_back("Alice");
-           testWorkforce2["Finance"][1].push_back("Bob");
-           testWorkforce2["Finance"][2].push_back("John");
-       } 
-
-       displayDepartment("Finance", testWorkforce2["Finance"]);
-       // Find size of total workforce before-hand
-       int sizeBefore = departmentSize(testWorkforce2["Finance"]);
-   
-       layoffEvent(testWorkforce2, "Finance");
-       displayDepartment("Finance", testWorkforce2["Finance"]);
-
-   
-       // Find size of total workforce afterward
-       int sizeAfter = departmentSize(testWorkforce2["Finance"]);
-       
-       // compare the sizes. If there's a change, then the layoff worked
-       cout << "Size of workforce before layoff: " << sizeBefore << endl;
-       cout << "Size of workforce after layoff: " << sizeAfter << endl;
-
-
-    cout << "Checking for behavior with empty workforce..." << endl;
-    // initialize empty workforce map
-    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce = {
-        {"Finance", {{{},{},{}}}},
-        {"Product", {{{},{},{}}}},
-        {"Marketing", {{{},{},{}}}},
-        {"HR", {{{},{},{}}}}};
-
-   
-       layoffEvent(emptyWorkforce, "Finance");
-       displayDepartment("Finance", emptyWorkforce["Finance"]);
-   
-    /*
+    
     // --------------------------------------------------------
     // STEP 1: Declare the main data structure
     // A map where:
@@ -96,7 +52,7 @@ int main()
     map<string, array<list<string>, NUM_ROLES>> workforce;
 
     // --------------------------------------------------------
-    // STEP 2: Open the external data file
+    // STEP 2: Open the external data file and 
     // --------------------------------------------------------
     // // Open the file (e.g., "employees.txt") using ifstream
     // // If the file does not open successfully, print an error and exit
@@ -186,7 +142,7 @@ int main()
     {
         displayDepartment(it->first, it->second);
     }
-    */
+    
     return 0;
 }
 
