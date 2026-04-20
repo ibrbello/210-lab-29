@@ -44,27 +44,33 @@ Test:
     
 Function 2: hiringEvent()
 This test will ensure that the hiring event did in fact add employees
-to the correct list. The test will create a small container of employees 
-and add some values 
-Then it will call hiringEvent(). The size of the container before and after
-the function call will be checked to determine whether people were hired.
+to the correct list. The test will create a empty container of employees.
+
+Then it will call hiringEvent(). The contents of the workforce container
+will then be printed to verify that employees were in fact hired.
 
 Test:
- // Test for hiringEvent() (use same test map)
-    cout << endl;
-    cout << "Testing hiring function..." << endl;
+   // Test for hiringEvent() 
+   cout << "Testing hiring function..." << endl;
+   // initialize empty workforce map
+   map<string, array<list<string>, NUM_ROLES>> testWorkforce = {
+    {"Finance", {{{},{},{}}}},
+    {"Product", {{{},{},{}}}},
+    {"Marketing", {{{},{},{}}}},
+    {"HR", {{{},{},{}}}}};
 
-    // print out original state
-    for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
-    {
-        displayDepartment(it->first, it->second);
-    }
-    // Check that the hiring event worked for different departments
-    hiringEvent(testWorkforce, "Finance");
-    displayDepartment("Finance", testWorkforce["Finance"]);
+   // print out original state
+   for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
+   {
+       displayDepartment(it->first, it->second);
+   }
+   // Check that the hiring event worked for different departments
+   hiringEvent(testWorkforce, "Finance");
+   displayDepartment("Finance", testWorkforce["Finance"]);
 
-    hiringEvent(testWorkforce, "HR");
-    displayDepartment("HR", testWorkforce["HR"]);
+   hiringEvent(testWorkforce, "HR");
+   displayDepartment("Finance", testWorkforce["Finance"]);
+   displayDepartment("HR", testWorkforce["HR"]);
   
 
 Function 3: layoffEvent()

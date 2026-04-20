@@ -42,73 +42,28 @@ int main()
 {
     srand(time(0));
 
+   // Test for hiringEvent() 
+   cout << "Testing hiring function..." << endl;
+   // initialize empty workforce map
+   map<string, array<list<string>, NUM_ROLES>> testWorkforce = {
+    {depts[1], {{{},{},{}}}},
+    {depts[0], {{{},{},{}}}},
+    {depts[2], {{{},{},{}}}},
+    {depts[3], {{{},{},{}}}}};
 
-  // Write tests for displayDepartment
-    // create test container
-    cout << "Testing display department function..." << endl;
+   // print out original state
+   for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
+   {
+       displayDepartment(it->first, it->second);
+   }
+   // Check that the hiring event worked for different departments
+   hiringEvent(testWorkforce, depts[1]);
+   displayDepartment(depts[1], testWorkforce[depts[1]]);
 
-    map<string, array<list<string>, NUM_ROLES>> testWorkforce;
-    testWorkforce["Finance"][0].push_back("Alice");
-    testWorkforce["HR"][0].push_back("Ibrahim");
-    testWorkforce["HR"][1].push_back("Bob");
-    // ensure correct output
-    for (auto it = testWorkforce.begin(); it != testWorkforce.end(); it++)
-    {
-        displayDepartment(it->first, it->second);
-    }
-    // Should cout  error message
-    cout << "Testing display department function on empty workforce..." << endl;
-    // This is an incorrect representation of an empty workforce
-    //map<string, array<list<string>, NUM_ROLES>> emptyWorkforce;
+   hiringEvent(testWorkforce, depts[3]);
+   displayDepartment(depts[1], testWorkforce[depts[1]]);
+   displayDepartment(depts[3], testWorkforce[depts[3]]);
 
-    // Actual empty workforce:
-    // 4 layers of braces: 1st for each key-value pair, 2nd for the value of the pair,
-    // 3rd for initializing the array within the keyed value, and 4th for the empty lists 
-    map<string, array<list<string>, NUM_ROLES>> emptyWorkforce = {
-        {"Finance", {{{},{},{}}}},
-        {"Product", {{{},{},{}}}},
-        {"Marketing", {{{},{},{}}}},
-        {"HR", {{{},{},{}}}}};
-    for (auto it = emptyWorkforce.begin(); it != emptyWorkforce.end(); it++)
-    {
-        // Print check to make sure the loop wasn't skipped
-        cout << "Within the loop..." << endl;
-        displayDepartment(it->first, it->second);
-    }
-    cout << endl;
-    
-    
-    // Test for departmentSize()
-    cout << "Testing departmentSize() function..." << endl;
-    array<list<string>, NUM_ROLES> testDept;
-      // Populate the department with workers from each role 
-      for (int i = 0; i < 10; i++) {
-        testDept[0].push_back("Alice");
-        testDept[1].push_back("Bob");
-        testDept[2].push_back("John");
-    } 
-    cout << "The size of the first department should be 30 people." << endl;
-    cout << "The size of the first department is: " << departmentSize(testDept) << endl;
-
-    // Test with different number of employees in each role
-    array<list<string>, NUM_ROLES> testDept2;
-    for (int j = 0; j < 10; j++) {
-        testDept2[0].push_back("Alice");
-        if (j % 2 == 0) {
-            testDept2[1].push_back("Bob");
-        }
-        if (j % 3 == 0) {
-            testDept2[2].push_back("John");
-        }
-    }
-    cout << "The size of the second department is: " << departmentSize(testDept2) << endl;
-
-    // Test with proper empty department
-    cout << "Testing departmentSize() function on empty department..." << endl;
-    array<list<string>, NUM_ROLES> emptyDept = {
-        {{},{},{}} };
-    cout << "The size of the empty department is: " << departmentSize(emptyDept) << endl;
-    
 
     /*
     // --------------------------------------------------------
@@ -242,7 +197,6 @@ void displayDepartment(string deptName, const array<list<string>, NUM_ROLES> & d
         }
         cout << "}" << endl;
     }
-  
 }
 
 // FUNCTION: hiringEvent
