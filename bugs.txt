@@ -41,7 +41,8 @@ workforce container wasn't changing at all. It turns out I was missing the & ope
 Once I added the &, the changes were reflected in the original container.
 
 Bug #8:
-
+While testing the main function, I was confused because all the cases were running at once,
+instead of one being chosen. Then i noticed that I forgot the break statement in each case.
 Bug #9:
 
 Bug #10:

@@ -59,7 +59,7 @@ int main()
 
     // Temporary variables for each employee read from file
     string d; // temp department
-    int r; // temp role
+    string r; // temp role
     string n; // temp name
 
 
@@ -68,7 +68,10 @@ int main()
         while (fin >> d) {
             fin >> r;
             fin >> n;
-            workforce[d][r].push_back(n);
+        int role = 0;
+        // convert the role name in the file to an index
+        if (r == "Manager") role = 0;
+            workforce[d][role].push_back(n);
         }
         fin.close();
     }
@@ -108,23 +111,30 @@ int main()
     // --- WIREFRAME: run just 3 dummy periods to show simulation flow ---
     for (int period = 1; period <= 40; period++)
     {
-        cout << "\n--- Time Period " << period << " ---" << endl;
-        
+        cout << "\n--- Quarter " << period << " ---" << endl;
+        // // Pick random dept
+        string chosen_dept = depts[rand() % NUM_DEPTS];
+        // Randomly choose which event will occur in this period
+        // 0 = nothing, 1 = hiring surge, 2 = layoff
+        int event = rand() % 2;
 
-        // // [In full implementation] pick random dept & random event
-        // Dummy: alternate between hiring and layoff on "Sales"
-        if (period % 2 == 1)
-        {
-            hiringEvent(workforce, "Sales");
-        }
-        else
-        {
-            layoffEvent(workforce, "Sales");
+        switch (event) {
+            case 0:
+                // Nothing happens
+                cout << "[NO EVENT] Nothing happened this quarter." << endl;
+                break;
+            case 1: 
+                // Hiring event
+                hiringEvent(workforce, chosen_dept);
+                break;
+            case 2:
+                // Layoff
+                layoffEvent(workforce, chosen_dept);
+                break;
+            default:
+                cout << "Something's off. Please try again." << endl;
         }
     }
-
-    
-
 
     // --------------------------------------------------------
     // STEP 6: Display FINAL STATE of BelloCorp after simulation
@@ -218,11 +228,8 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
         // Make sure that specific role is not empty
         auto & doomed_role = workforce[dept][role];
         int role_size = doomed_role.size();
-        // Print statement for testing
-        cout << "Size of doomed role: " << role_size << endl;
         if (role_size == 0) {
             // Don't layoff, just move on
-            cout << "Role is empty, so no layoffs." << endl;
             continue;
         }
         else {
@@ -231,8 +238,6 @@ void layoffEvent(map<string, array<list<string>, NUM_ROLES>>& workforce, string 
             auto it = doomed_role.begin();
             advance(it, rand() % role_size);
             // Now that the iterator is pointing to the right employee, fire them
-            // Print statement for testing
-            cout << "Doomed employee: " << *it << endl;
             doomed_role.erase(it);
             // Successful layoff, so increment layoff counter
             layoffs_completed++;
