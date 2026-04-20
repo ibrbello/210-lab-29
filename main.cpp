@@ -52,33 +52,31 @@ int main()
     map<string, array<list<string>, NUM_ROLES>> workforce;
 
     // --------------------------------------------------------
-    // STEP 2: Open the external data file and 
+    // STEP 2: Read data from the file and populate the map
     // --------------------------------------------------------
-    // // Open the file (e.g., "employees.txt") using ifstream
-    // // If the file does not open successfully, print an error and exit
+    // This will provide BelloCorp's workforce at the beginning of the
+    // 10-year period.
 
-    // --- WIREFRAME: simulate file reading with one dummy entry ---
+    // Temporary variables for each employee read from file
+    string d; // temp department
+    int r; // temp role
+    string n; // temp name
+
+
     ifstream fin("employees.txt");
-    if (!fin)
-    {
-        cout << "[WARNING] Could not open employees.txt. Running with dummy data." << endl;
-
-        // Dummy data: one department entry to prove the data structure works
-        workforce["Sales"][0].push_back("Alice_Manager");      // Manager
-        workforce["Sales"][1].push_back("Bob_EntryLevel");     // Entry-Level
-        workforce["Sales"][2].push_back("Carol_Intern");       // Intern
+    if (fin.good()) {
+        while (fin >> d) {
+            fin >> r;
+            fin >> n;
+            workforce[d][r].push_back(n);
+        }
+        fin.close();
     }
+    else
+        cout << "Input file not found. Please try again." << endl;
 
     // --------------------------------------------------------
-    // STEP 3: Read data from file and populate the map
-    // --------------------------------------------------------
-    // // While there are still lines to read from the file:
-    // //   Read: department name, employee type (0/1/2), employee name
-    // //   Insert the employee name into workforce[dept][type]
-    // // Close the file after reading
-
-    // --------------------------------------------------------
-    // STEP 4: Display INITIAL STATE of BelloCorp
+    // STEP 3: Display INITIAL STATE of BelloCorp
     // --------------------------------------------------------
     cout << "============================================" << endl;
     cout << "   BELLOCORP WORKFORCE - INITIAL STATE     " << endl;
@@ -87,16 +85,15 @@ int main()
     // // Iterate through each entry in the map
     // // For each department, call displayDepartment()
 
-    // --- WIREFRAME ---
     for (auto it = workforce.begin(); it != workforce.end(); it++)
     {
         displayDepartment(it->first, it->second);
     }
 
     // --------------------------------------------------------
-    // STEP 5: Run the discrete-event simulation (25 time periods)
+    // STEP 5: Run the discrete-event simulation (40 time periods)
     // --------------------------------------------------------
-    // // For each time period from 1 to 25:
+    // // For each time period from 1 to 40:
     // //   Print the current time period number
     // //   Randomly select a department from the map
     // //   Randomly decide which event occurs:
@@ -105,13 +102,14 @@ int main()
     // //     2 = Layoff       -> call layoffEvent()
 
     cout << "\n============================================" << endl;
-    cout << "       RUNNING SIMULATION (25 PERIODS)      " << endl;
+    cout << "       RUNNING SIMULATION (40 PERIODS)      " << endl;
     cout << "============================================" << endl;
 
     // --- WIREFRAME: run just 3 dummy periods to show simulation flow ---
-    for (int period = 1; period <= 3; period++)
+    for (int period = 1; period <= 40; period++)
     {
         cout << "\n--- Time Period " << period << " ---" << endl;
+        
 
         // // [In full implementation] pick random dept & random event
         // Dummy: alternate between hiring and layoff on "Sales"
